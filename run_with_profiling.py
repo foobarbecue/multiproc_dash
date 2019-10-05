@@ -21,9 +21,8 @@ def run_with_profiling(command, list_of_arglists, sqlite_path='./profile.db', in
         # proc = subprocess.Popen([command, *arglist], stderr=subprocess.DEVNULL)
         proc = subprocess.Popen([command, *arglist])
         psutil_process = psutil.Process(proc.pid)
-        sleep(1)
         while not proc.poll():
-            sleep(1)
+            sleep(interval)
             now = pandas.datetime.now()
             with psutil_process.oneshot():
                 df = pandas.DataFrame(columns=('cmd', 'args', 'CPU', 'mem')).astype({'CPU': float, 'mem': int})
